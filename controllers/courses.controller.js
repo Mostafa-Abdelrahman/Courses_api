@@ -1,43 +1,53 @@
-let {courses}=require("../data/courses")
+const Course=require("../models/courses");
 const {validationResult}=require("express-validator")
 
-const getAllCourses=(req,res)=>{
+const getAllCourses= async (req,res)=>{
+    const courses= await Course.find();
     res.json(courses);
 }
 
-const getSingleCourse=(req,res)=>{
-    const courseId=+req.params.courseId;
-    const course=courses.find((course)=>course.id===courseId);
-    if(!course){
-        return res.status(404).json({msg:" course not found"});
-    }else{
-        res.json(course);
+const getSingleCourse= async (req,res)=>{
+    try{
+        const course=await Course.findById(req.params.courseId);
+        if(!course){
+            return res.status(404).json({msg:" course not found"});
+        }else{
+            res.json(course);
+        }
+    }catch(err){
+        return res.status(404).json({msg:" invalid obj id"});
     }
+    
+    
 }
 
-const addCourse=(req,res)=>{
+const addCourse=async (req,res)=>{
     const errors=validationResult(req);
     if(!errors.isEmpty()){
         return res.status(400).json(errors.array());
     }
-    const course={id:courses.length+1, ...req.body};
-    courses.push(course);
-    res.json(course);
+    const newCourse=new Course(req.body);
+    await newCourse.save();
+    res.json(newCourse);
 }
 
-const updateCourse=(req,res)=>{
-    const courseId=+req.params.courseId;
-    let course =courses.find((course)=>course.id===courseId);
-    console.log(course);
-    course= {...course,...req.body};
-    console.log(course);
+const updateCourse=async(req,res)=>{
+    try{
+    const course=await Course.findByIdAndUpdate(req.params.courseId,{$set:{...req.body}});
     res.status(200).json(course);
+    }catch(err){
+        res.status(400),json({ms:"invalid obj id"})
+    }
+    
 }
 
-const deleteCourse=(req,res)=>{
-    const courseId=+req.params.courseId;
-    courses=courses.filter((course)=>course.id!==courseId);
-    res.status(200).json({deleting:"done"});
+const deleteCourse=async(req,res)=>{
+    try{
+        const result= await Course.deleteOne({_id:req.params.courseId})
+        res.status(200).json(result);
+    }catch(err){
+        res.status(400),json({ms:"invalid obj id"})
+    }
     // res.status(200).json(courses);
 }
 
