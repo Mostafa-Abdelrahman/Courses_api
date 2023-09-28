@@ -15,7 +15,7 @@ const getAllCourses= async (req,res)=>{
             res.json({"status":"sucess","data":{courses}});
         }
     }catch(err){
-        return res.status(404).json({status:"ERROR",data:null,msg:err,code:"400"});
+        return res.status(400).json({status:"ERROR",data:null,msg:err,code:"400"});
     }
 }
 
@@ -28,7 +28,7 @@ const getSingleCourse= async (req,res)=>{
             res.json({"status":"SUCCESS","data":{course}});
         }
     }catch(err){
-        return res.status(404).json({status:"ERROR",data:null,msg:err,code:"400"});
+        return res.status(400).json({status:"ERROR",data:null,msg:err,code:"400"});
     }
     
     
@@ -49,7 +49,7 @@ const updateCourse=async(req,res)=>{
     const course=await Course.updateOne({_id:req.params.courseId},{$set:{...req.body}});
     res.json({"status":"SUCCESS","data":{course}});
 }catch(err){
-    return res.status(404).json({status:"ERROR",data:null,msg:err,code:"400"});
+    return res.status(400).json({status:"ERROR",data:null,msg:err,code:"400"});
 }
     
 }
@@ -65,7 +65,7 @@ const deleteCourse=async(req,res)=>{
             res.status(200).json({status:"FAIL",data:"already deleted"});
         }
     }catch(err){
-        return res.status(404).json({status:"ERROR",data:null,msg:err,code:"400"});
+        return res.status(400).json({status:"ERROR",data:null,msg:err,code:"400"});
     }
 }
 

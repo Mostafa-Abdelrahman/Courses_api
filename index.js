@@ -9,6 +9,9 @@ mongoose.connect(uri).then(()=>{
 const app=express();
 app.use(express.json());
 app.use('/api/courses',courseRouter);
+app.all("*",(req,res)=>{
+    return res.status(404).json({status:"ERROR",messsage:"this resource is not available"});
+})
 
 app.listen(5000,()=>{
     console.log("running...");
