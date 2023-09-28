@@ -1,7 +1,8 @@
+require("dotenv").config()
 const express=require("express");
 const courseRouter=require("./routes/courses.route")
 const mongoose=require('mongoose');
-const uri="mongodb+srv://mustafa:helloworld@nodejs.qoxsb5e.mongodb.net/codeZone?retryWrites=true&w=majority";
+const uri=process.env.mongo_url;
 mongoose.connect(uri).then(()=>{
     console.log("mongodb server started")
 })
