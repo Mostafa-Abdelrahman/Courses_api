@@ -1,4 +1,5 @@
 require("dotenv").config()
+const cors=require("cors")
 const express=require("express");
 const courseRouter=require("./routes/courses.route")
 const mongoose=require('mongoose');
@@ -7,6 +8,7 @@ mongoose.connect(uri).then(()=>{
     console.log("mongodb server started")
 })
 const app=express();
+app.use(cors());
 app.use(express.json());
 app.use('/api/courses',courseRouter);
 app.all("*",(req,res)=>{
