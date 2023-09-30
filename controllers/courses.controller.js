@@ -1,7 +1,5 @@
-const e = require("express");
 const Course=require("../models/courses");
 const {validationResult}=require("express-validator")
-
 const getAllCourses= async (req,res)=>{
     try{
         const limit=req.query.limit|| 10;
@@ -12,10 +10,10 @@ const getAllCourses= async (req,res)=>{
             return res.status(404).json({status:"FAIL",data:{courses:null,code:"404"}});
         }
         else{
-            res.json({"status":"sucess","data":{courses}});
+            res.json({status:"SUCCESS",data:{courses}});
         }
     }catch(err){
-        return res.status(400).json({status:"ERROR",data:null,msg:err,code:"400"});
+        return res.status(400).json({status:"ERROR",data:null,message:err,code:"400"});
     }
 }
 
@@ -41,7 +39,7 @@ const addCourse=async (req,res)=>{
     }
     const newCourse=new Course(req.body);
     await newCourse.save();
-    res.json({status:"SUCCESS",data:newCourse});
+    res.status(201).json({status:"SUCCESS",data:newCourse});
 }
 
 const updateCourse=async(req,res)=>{
