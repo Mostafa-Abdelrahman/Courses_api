@@ -21,8 +21,10 @@ const users=new mongoose.Schema({
     password:{
         type:String,
         required:true
+    },
+    token:{
+        type:String
     }
-
 })
 
 module.exports=mongoose.model("User",users);

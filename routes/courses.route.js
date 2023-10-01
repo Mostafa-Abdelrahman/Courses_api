@@ -1,14 +1,15 @@
 
 const express=require("express");
 const router=express.Router();
-
 const {body}=require("express-validator")
 const cc=require("../controllers/courses.controller.js");
+const verfiyToken=require("../middleware/verfiyToken");
+
 
 //CRUD (Create / Read / Update /Delete)
 
 router.route('/')
-                .get(cc.getAllCourses)
+                .get(verfiyToken,cc.getAllCourses)
                 .post([
                     body('title')
                         .notEmpty()
@@ -18,11 +19,11 @@ router.route('/')
                     body('price')
                         .notEmpty()
                         .withMessage("price is requried")
-                ],cc.addCourse);
+                ],verfiyToken,cc.addCourse);
 
 router.route("/:courseId")
-        .get(cc.getSingleCourse)
-        .patch(cc.updateCourse)
-        .delete(cc.deleteCourse);
+        .get(verfiyToken,cc.getSingleCourse)
+        .patch(verfiyToken,cc.updateCourse)
+        .delete(verfiyToken,cc.deleteCourse);
 
 module.exports=router;
