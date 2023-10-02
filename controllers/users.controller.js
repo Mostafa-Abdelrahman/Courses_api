@@ -28,7 +28,7 @@ const reqister=async (req,res)=>{
 
             const newUser= new User(req.body);
             //genrate token
-            const token= await jwt.sign({email: newUser.email, id:newUser._id},"d49becfb8eb4464da54598dee86e8543ae54f71cfb4da6c16e02f47fd3103019",{expiresIn:'1m'});
+            const token= await jwt.sign({email: newUser.email, id:newUser._id},"d49becfb8eb4464da54598dee86e8543ae54f71cfb4da6c16e02f47fd3103019",{expiresIn:'5m'});
             newUser.token=token;
             await newUser.save();
             res.status(201).json({status:'SUCCESS',data:newUser});
@@ -51,7 +51,7 @@ const login= async(req,res)=>{
             if(user){
                 const comparePass=await bcrypt.compare(password,user.password);
                 if(user && comparePass){
-                    const token= await jwt.sign({email: user.email, id:user._id},"d49becfb8eb4464da54598dee86e8543ae54f71cfb4da6c16e02f47fd3103019",{expiresIn:'1m'});
+                    const token= await jwt.sign({email: user.email, id:user._id},"d49becfb8eb4464da54598dee86e8543ae54f71cfb4da6c16e02f47fd3103019",{expiresIn:'5m'});
                     user.token=token;
                     res.status(200).json({status:'SUCCESS',message:`welocme ${user.firstName}`,token:user.token});
                 }else{

@@ -1,13 +1,14 @@
-require("dotenv").config()
-const cors=require("cors")
+require("dotenv").config();
+const cors=require("cors");
 const express=require("express");
-const courseRouter=require("./routes/courses.route")
-const userRouter=require('./routes/user.route.js')
+const courseRouter=require("./routes/courses.route");
+const userRouter=require('./routes/user.route.js');
 const mongoose=require('mongoose');
-const uri=process.env.mongo_url;
-mongoose.connect(uri).then(()=>{
-    console.log("mongodb server started")
-})
+const uri="mongodb://127.0.0.1:27017/Coursera";
+
+mongoose.connect(uri, {useNewUrlParser: true, useUnifiedTopology: true}).then(()=>{
+        console.log("mongodb server started")
+    })
 const app=express();
 app.use(cors());
 app.use(express.json());
