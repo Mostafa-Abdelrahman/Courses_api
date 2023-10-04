@@ -1,13 +1,12 @@
 const { default: mongoose } = require("mongoose");
-
 const courses=new mongoose.Schema({
     title:{
         type:String,
-        required:true
+        required:true,
     },
     price:{
-        type:String,
-        required:true
+        type:Number,
+        required:true,
     }
 })
 module.exports= mongoose.model('Course',courses);

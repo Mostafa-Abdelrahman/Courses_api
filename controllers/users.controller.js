@@ -20,15 +20,16 @@ const getAllUsers= async (req,res)=>{
 
 const reqister=async (req,res)=>{
     try{
-        const {firstName,lastName,email,password}=req.body;
+        const {firstName,lastName,email,password,role,avatar}=req.body;
         const user= await User.findOne({email:email});
         if(!user){
             //hashing the password
             req.body.password=await bcrypt.hash(req.body.password,10);
 
             const newUser= new User(req.body);
+            newUser.avatar=req.file.filename;
             //genrate token
-            const token= await jwt.sign({email: newUser.email, id:newUser._id},"d49becfb8eb4464da54598dee86e8543ae54f71cfb4da6c16e02f47fd3103019",{expiresIn:'5m'});
+            const token= await jwt.sign({email: newUser.email, id:newUser._id,role:newUser.role},"d49becfb8eb4464da54598dee86e8543ae54f71cfb4da6c16e02f47fd3103019",{expiresIn:'5m'});
             newUser.token=token;
             await newUser.save();
             res.status(201).json({status:'SUCCESS',data:newUser});
@@ -42,7 +43,7 @@ const reqister=async (req,res)=>{
 }
 
 const login= async(req,res)=>{
-    const {password,email}=req.body;
+    const {password,email,role}=req.body;
     try{
         if(!password&&!email){
             res.status(400).json({status:'FAILD',message:'password and email are required',code:'400',data:null})
@@ -51,7 +52,7 @@ const login= async(req,res)=>{
             if(user){
                 const comparePass=await bcrypt.compare(password,user.password);
                 if(user && comparePass){
-                    const token= await jwt.sign({email: user.email, id:user._id},"d49becfb8eb4464da54598dee86e8543ae54f71cfb4da6c16e02f47fd3103019",{expiresIn:'5m'});
+                    const token= await jwt.sign({email: user.email, id:user._id,role:user.role},"d49becfb8eb4464da54598dee86e8543ae54f71cfb4da6c16e02f47fd3103019",{expiresIn:'5m'});
                     user.token=token;
                     res.status(200).json({status:'SUCCESS',message:`welocme ${user.firstName}`,token:user.token});
                 }else{
