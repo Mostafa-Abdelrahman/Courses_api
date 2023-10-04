@@ -1,5 +1,4 @@
 const jwt=require("jsonwebtoken");
-const { CurrencyCodes } = require("validator/lib/isiso4217");
 const verfiyToken=(req,res,next)=>{
     const authHeader=req.headers['Authorization']||req.headers['authorization'];
     if(!authHeader){
