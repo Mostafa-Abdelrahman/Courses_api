@@ -1,4 +1,5 @@
-const User=require('../models/user');
+const migration=require('../migration/migrate');
+const User=require('../models/user')
 const bcrypt=require('bcryptjs');
 const jwt=require('jsonwebtoken');
 
@@ -25,13 +26,12 @@ const reqister=async (req,res)=>{
         if(!user){
             //hashing the password
             req.body.password=await bcrypt.hash(req.body.password,10);
-
             const newUser= new User(req.body);
-            newUser.avatar=req.file.filename;
             //genrate token
             const token= await jwt.sign({email: newUser.email, id:newUser._id,role:newUser.role},process.env.jwt_secret_key,{expiresIn:'5m'});
             newUser.token=token;
             await newUser.save();
+            migration.migrate();
             res.status(201).json({status:'SUCCESS',data:newUser});
         }else{
             res.status(400).json({status:'FAILD',message:'User Already Exists',code:'400',data:null})
