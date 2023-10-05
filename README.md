@@ -2,7 +2,7 @@
 small api project that can do CRUD operation 
 
 # postman collection key :
-https://api.postman.com/collections/25134711-f0b7cf95-2f6a-49f6-a912-69938da490cd?access_key=
+https://api.postman.com/collections/25134711-bea668f8-8bf6-4620-b0b0-80d76154ba5c?access_key=PMAT-01HC03RNEEG1Z5K20M42A0MK1Y
 
 # What Should I Do If I Want To Try The application ? follow these commands
 - clone the project 
