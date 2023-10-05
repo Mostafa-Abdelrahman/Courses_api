@@ -28,6 +28,6 @@ https://api.postman.com/collections/25134711-bea668f8-8bf6-4620-b0b0-80d76154ba5
   - express.js
   - mongodb
   - mongoose.js
-  -npm package manager
+  - npm package manager
   
 
