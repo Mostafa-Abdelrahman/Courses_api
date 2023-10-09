@@ -5,7 +5,7 @@ const courseRouter=require("./routes/courses.route");
 const userRouter=require('./routes/user.route.js');
 const mongoose=require('mongoose');
 const path=require('path');
-mongoose.connect(process.env.uri).then(()=>{
+mongoose.connect("mongodb://127.0.0.1:27017/Coursera").then(()=>{
         console.log("mongodb server started")
     })
 const app=express();
