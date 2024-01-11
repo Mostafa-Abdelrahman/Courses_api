@@ -1,4 +1,4 @@
-# express-api-smallProject
+# courses-api-backend
 small api project that can do CRUD operation 
 
 # postman collection key :
